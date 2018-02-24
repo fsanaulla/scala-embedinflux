@@ -5,7 +5,7 @@ lazy val commonSettings = Seq(
   crossScalaVersions := Seq("2.11.11", "2.12.4"),
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/chronicler")),
-  licenses += "MIT" -> url("https://opensource.org/licenses/MIT"),
+  licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
   developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla"))
 )
 
