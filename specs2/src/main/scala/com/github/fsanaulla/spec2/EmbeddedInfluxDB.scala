@@ -22,9 +22,11 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike =>
 
   override def beforeAll: Unit = {
     server.start()
+    Thread.sleep(1000)
   }
 
   override def afterAll: Unit = {
     server.stop()
+    Thread.sleep(1000)
   }
 }
