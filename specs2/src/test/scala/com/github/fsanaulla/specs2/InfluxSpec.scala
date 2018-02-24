@@ -1,10 +1,11 @@
 package com.github.fsanaulla.specs2
 
 import com.paulgoldbaum.influxdbclient.InfluxDB
-import org.specs2.Specification
+import org.specs2._
 import org.specs2.concurrent.ExecutionEnv
-import org.specs2.execute.Result
-import org.specs2.specification.core.SpecStructure
+
+import scala.concurrent.duration._
+
 
 /**
   * Created by
@@ -12,15 +13,14 @@ import org.specs2.specification.core.SpecStructure
   * Date: 23.02.18
   */
 class InfluxSpec(implicit ee: ExecutionEnv)
-  extends Specification
+  extends mutable.Specification
     with EmbeddedInfluxDB {
 
-  def is: SpecStructure =
-    sequential ^ s"""
-      The `InfluxDB` should
-        correctly work                $e1"""
+  lazy val influx: InfluxDB = InfluxDB.connect("localhost")
 
-  val influx: InfluxDB = InfluxDB.connect("localhost")
-
-  val e1: Result = influx.ping().map(_.series must be equalTo Nil).await
+  "InfluxDB" >> {
+    "ping databse" in {
+      influx.ping().map(_.series must be equalTo Nil).await(retries = 2, timeout = 2.seconds)
+    }
+  }
 }
