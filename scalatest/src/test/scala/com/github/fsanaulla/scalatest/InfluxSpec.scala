@@ -5,10 +5,11 @@ package com.github.fsanaulla.scalatest
 import com.paulgoldbaum.influxdbclient._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Second, Seconds, Span}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Ignore, Matchers}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
+@Ignore
 class InfluxSpec
   extends FlatSpec
     with Matchers
