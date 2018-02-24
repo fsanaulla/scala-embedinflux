@@ -9,4 +9,4 @@ scala:
   - 2.11.8
 
 script:
-  - sbt clean compile test
+  - sbt ++$TRAVIS_SCALA_VERSION clean compile test

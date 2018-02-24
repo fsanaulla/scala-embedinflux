@@ -16,12 +16,10 @@ class InfluxSpec(implicit ee: ExecutionEnv)
     with EmbeddedInfluxDB{ def is: SpecStructure =
   s"""
     The `InfluxDB` should
-      correctly work      $e1
-  """.stripMargin
+      correctly work          $e1
+  """
 
   lazy val influx: InfluxDB = InfluxDB.connect("localhost", port)
-
-  override val port = 8087
 
   def e1: Result = (for {
     res <- influx.ping()
