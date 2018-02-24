@@ -19,7 +19,9 @@ class InfluxSpec(implicit ee: ExecutionEnv)
       correctly work      $e1
   """.stripMargin
 
-  lazy val influx: InfluxDB = InfluxDB.connect("localhost", 8086)
+  lazy val influx: InfluxDB = InfluxDB.connect("localhost", port)
+
+  override val port = 8087
 
   def e1: Result = (for {
     res <- influx.ping()
