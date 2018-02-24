@@ -1,4 +1,4 @@
-package com.github.fsanaulla.spec2
+package com.github.fsanaulla.specs2
 
 import com.paulgoldbaum.influxdbclient.InfluxDB
 import org.specs2.Specification
@@ -15,13 +15,12 @@ class InfluxSpec(implicit ee: ExecutionEnv)
   extends Specification
     with EmbeddedInfluxDB {
 
-  def is: SpecStructure = sequential ^ s"""
-    The `InfluxDB` should
-      correctly work          $e1"""
+  def is: SpecStructure =
+    sequential ^ s"""
+      The `InfluxDB` should
+        correctly work                $e1"""
 
-  val influx: InfluxDB = InfluxDB.connect("localhost", port)
+  val influx: InfluxDB = InfluxDB.connect("localhost")
 
-  def e1: Result = (for {
-    res <- influx.ping()
-  } yield res.series must be equalTo Nil).await
+  val e1: Result = influx.ping().map(_.series must be equalTo Nil).await
 }

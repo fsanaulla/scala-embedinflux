@@ -53,4 +53,6 @@ lazy val specs2 = (project in file("specs2"))
       "org.specs2" %% "specs2-core" % "4.0.3",
       "io.apisense.embed.influx" % "embed-influxDB" % "1.0.0",
       "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2" // todo: move to chronicler, when it will be published)
-    ))
+    ),
+    scalacOptions in Test ++= Seq("-Yrangepos")
+  )

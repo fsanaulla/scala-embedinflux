@@ -1,4 +1,4 @@
-package com.github.fsanaulla.spec2
+package com.github.fsanaulla.specs2
 
 import io.apisense.embed.influx.InfluxServer
 import io.apisense.embed.influx.configuration.InfluxConfigurationWriter
@@ -15,17 +15,14 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike =>
   val port = 8086
   val backUpPort = 8088
 
-  private val server: InfluxServer =
+  private val influx: InfluxServer =
     new InfluxServer
       .Builder()
       .setInfluxConfiguration(new InfluxConfigurationWriter(backUpPort, port))
       .build()
 
-  override def beforeAll: Unit = {
-    server.start()
-  }
+  override def beforeAll: Unit = influx.start()
 
-  override def afterAll: Unit = {
-    server.stop()
-  }
+  override def afterAll: Unit = influx.stop()
+
 }

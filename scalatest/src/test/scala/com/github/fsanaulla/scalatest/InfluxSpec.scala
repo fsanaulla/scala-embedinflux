@@ -9,13 +9,17 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class InfluxSpec extends FlatSpec with Matchers with EmbeddedInfluxDB with ScalaFutures {
+class InfluxSpec
+  extends FlatSpec
+    with Matchers
+    with EmbeddedInfluxDB
+    with ScalaFutures {
 
   implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  lazy val influxdb: InfluxDB = InfluxDB.connect("localhost", port)
+  lazy val influx: InfluxDB = InfluxDB.connect("localhost")
 
   "InfluxDB" should "correctly work" in {
-    influxdb.ping().futureValue.series shouldEqual Nil
+    influx.ping().futureValue.series shouldEqual Nil
   }
 }
