@@ -8,12 +8,13 @@ import org.scalatest.{BeforeAndAfterAll, Suite}
 
 trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite =>
 
-  val port: Int = 8086
+  val port = 8086
+  val backUpPort = 8088
 
   private val server: InfluxServer =
     new InfluxServer
       .Builder()
-      .setInfluxConfiguration(new InfluxConfigurationWriter(8088, port))
+      .setInfluxConfiguration(new InfluxConfigurationWriter(backUpPort, port))
       .build()
 
   override def beforeAll(): Unit = {

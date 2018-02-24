@@ -13,13 +13,13 @@ import org.specs2.specification.core.SpecStructure
   */
 class InfluxSpec(implicit ee: ExecutionEnv)
   extends Specification
-    with EmbeddedInfluxDB{ def is: SpecStructure =
-  s"""
-    The `InfluxDB` should
-      correctly work          $e1
-  """
+    with EmbeddedInfluxDB {
 
-  lazy val influx: InfluxDB = InfluxDB.connect("localhost", port)
+  def is: SpecStructure = sequential ^ s"""
+    The `InfluxDB` should
+      correctly work          $e1"""
+
+  val influx: InfluxDB = InfluxDB.connect("localhost", port)
 
   def e1: Result = (for {
     res <- influx.ping()

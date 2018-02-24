@@ -12,21 +12,20 @@ import org.specs2.specification.BeforeAfterAll
   */
 trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike =>
 
-  val port: Int = 8086
+  val port = 8086
+  val backUpPort = 8088
 
   private val server: InfluxServer =
     new InfluxServer
       .Builder()
-      .setInfluxConfiguration(new InfluxConfigurationWriter(8088, port))
+      .setInfluxConfiguration(new InfluxConfigurationWriter(backUpPort, port))
       .build()
 
   override def beforeAll: Unit = {
     server.start()
-    Thread.sleep(1000)
   }
 
   override def afterAll: Unit = {
     server.stop()
-    Thread.sleep(1000)
   }
 }
