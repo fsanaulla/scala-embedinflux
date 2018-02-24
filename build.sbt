@@ -1,7 +1,7 @@
 import sbt.Keys.scalaVersion
 
 lazy val commonSettings = Seq(
-  version := "0.1.0",
+  version := "0.1.1",
   crossScalaVersions := Seq("2.11.11", "2.12.4"),
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/chronicler")),
