@@ -1,5 +1,3 @@
-/** Copyright © 2018 Honeywell International Inc. */
-
 package com.github.fsanaulla.scalatest
 
 import io.apisense.embed.influx.InfluxServer
