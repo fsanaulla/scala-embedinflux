@@ -19,8 +19,12 @@ trait EmbeddedInfluxDB extends BeforeAfterAll {
       .setInfluxConfiguration(new InfluxConfigurationWriter(backUpPort, port))
       .build()
 
-  override def beforeAll: Unit = influx.start()
+  override def beforeAll: Unit = {
+    influx.init()
+    influx.start()
+  }
 
   override def afterAll: Unit = influx.stop()
 
+  final def cleanUpResources(): Unit = influx.cleanup()
 }

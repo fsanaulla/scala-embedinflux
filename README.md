@@ -9,10 +9,10 @@ Inspired by [scalatest-embedmongo](https://github.com/SimplyScala/scalatest-embe
 Add this dependencies to your `build.sbt`
 ```
 // Scalates
-libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % "0.1.1" % Test
+libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % "0.1.2" % Test
 
 // Specs2
-libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % "0.1.1" % Test
+libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % "0.1.2" % Test
 ```
 ## Usage
 Influx will start by default of HTTP port `8086`, with back up port `8088`. You can change this parameters by overriding `port` and `backUpPort` fields.
