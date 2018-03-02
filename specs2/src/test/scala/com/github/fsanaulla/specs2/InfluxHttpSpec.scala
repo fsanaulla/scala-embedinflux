@@ -6,13 +6,12 @@ import org.specs2.concurrent.ExecutionEnv
 
 import scala.concurrent.duration._
 
-
 /**
   * Created by
   * Author: fayaz.sanaulla@gmail.com
   * Date: 23.02.18
   */
-class InfluxSpec(implicit ee: ExecutionEnv)
+class InfluxHttpSpec(implicit ee: ExecutionEnv)
   extends mutable.Specification
     with EmbeddedInfluxDB {
 

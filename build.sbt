@@ -1,12 +1,14 @@
-import sbt.Keys.scalaVersion
+import sbt.Keys.{resolvers, scalaVersion}
 
 lazy val commonSettings = Seq(
-  version := "0.1.2",
+  version := "0.1.3",
   crossScalaVersions := Seq("2.11.11", "2.12.4"),
   organization := "com.github.fsanaulla",
-  homepage := Some(url("https://github.com/fsanaulla/chronicler")),
+  homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
   licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
-  developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla"))
+  developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
+
+  resolvers ++= Seq(Resolver.mavenLocal) // temporary
 )
 
 lazy val publishSettings = Seq(
@@ -15,8 +17,8 @@ lazy val publishSettings = Seq(
   publishArtifact in Test := false,
   scmInfo := Some(
     ScmInfo(
-      url("https://github.com/fsanaulla/chronicler"),
-      "https://github.com/fsanaulla/chronicler.git"
+      url("https://github.com/fsanaulla/scala-embedinflux"),
+      "https://github.com/fsanaulla/scala-embedinflux.git"
     )
   ),
   pomIncludeRepository := (_ => false),
@@ -37,11 +39,9 @@ lazy val scalaTest = (project in file("scalatest"))
   .settings(
     name := "scalatest-embedinflux",
     scalaVersion := "2.12.4",
-    libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.0.5",
-      "io.apisense.embed.influx" % "embed-influxDB" % "1.0.0",
-      "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2" // todo: move to chronicler, when it will be published)
-  ))
+    libraryDependencies ++= Dependencies.scalaTestDep,
+    parallelExecution := false
+  )
 
 lazy val specs2 = (project in file("specs2"))
   .settings(commonSettings: _*)
@@ -49,10 +49,6 @@ lazy val specs2 = (project in file("specs2"))
   .settings(
     name := "specs2-embedinflux",
     scalaVersion := "2.12.4",
-    libraryDependencies ++= Seq(
-      "org.specs2" %% "specs2-core" % "4.0.3",
-      "io.apisense.embed.influx" % "embed-influxDB" % "1.0.0",
-      "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2" // todo: move to chronicler, when it will be published)
-    ),
+    libraryDependencies ++= Dependencies.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
