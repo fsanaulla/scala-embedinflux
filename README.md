@@ -8,7 +8,7 @@ Inspired by [scalatest-embedmongo](https://github.com/SimplyScala/scalatest-embe
 ## Integration
 Add this dependencies to your `build.sbt`
 ```
-// Scalates
+// Scalatest
 libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % "0.1.2" % Test
 
 // Specs2
