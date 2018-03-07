@@ -1,5 +1,5 @@
 # Scala Embedded InfluxDB
-[![CircleCI](https://circleci.com/gh/fsanaulla/scala-embedinflux/tree/master.svg?style=svg)](https://circleci.com/gh/fsanaulla/scala-embedinflux/tree/master)
+[![Build Status](https://travis-ci.org/fsanaulla/scala-embedinflux.svg?branch=master)](https://travis-ci.org/fsanaulla/scala-embedinflux)
 
 Extensions for [ScalaTest](http://www.scalatest.org/) and [Specs2](https://etorreborre.github.io/specs2/), for simply embedding [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) in your test.
 Built on top of [embed-influxDB](https://github.com/APISENSE/embed-influxDB). 
