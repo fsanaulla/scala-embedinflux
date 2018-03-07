@@ -20,6 +20,8 @@ class InfluxUdpSpec
 
   implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
 
+  override def udpPort = Some(8089)
+
   lazy val influxHttp: InfluxDB = InfluxDB.connect("localhost", httpPort)
   lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", udpPort.get)
 
@@ -28,7 +30,7 @@ class InfluxUdpSpec
 
     influxUdp.write(tp) shouldEqual {}
 
-    Thread.sleep(1000)
+    Thread.sleep(3000)
 
     influxHttp
       .selectDatabase("udp")

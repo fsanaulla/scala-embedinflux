@@ -38,10 +38,8 @@ trait EmbeddedInfluxDB extends BeforeAfterAll {
     influx.start()
   }
 
-  override def afterAll: Unit = influx.stop()
-
-  /***
-    * Clean up all resources
-    */
-  final def cleanUpResources(): Unit = influx.cleanup()
+  override def afterAll: Unit = {
+    influx.stop()
+    influx.cleanup()
+  }
 }
