@@ -2,6 +2,7 @@ package com.github.fsanaulla.specs2
 
 import io.apisense.embed.influx.InfluxServer
 import io.apisense.embed.influx.configuration.InfluxConfigurationWriter
+import org.specs2.mutable.SpecificationLike
 import org.specs2.specification.BeforeAfterAll
 
 /**
@@ -9,7 +10,7 @@ import org.specs2.specification.BeforeAfterAll
   * Author: fayaz.sanaulla@gmail.com
   * Date: 23.02.18
   */
-trait EmbeddedInfluxDB extends BeforeAfterAll {
+trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike =>
 
   /** define HTTP port */
   def httpPort = 8086
@@ -27,7 +28,7 @@ trait EmbeddedInfluxDB extends BeforeAfterAll {
       new InfluxConfigurationWriter(backUpPort, httpPort)
   }
 
-  private val influx: InfluxServer =
+  private lazy val influx: InfluxServer =
     new InfluxServer
       .Builder()
       .setInfluxConfiguration(conf)

@@ -1,4 +1,4 @@
-import sbt.Keys.{resolvers, scalaVersion}
+import sbt.Keys.scalaVersion
 
 lazy val commonSettings = Seq(
   version := "0.1.3",
@@ -7,8 +7,7 @@ lazy val commonSettings = Seq(
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
   licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
   developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
-
-  resolvers ++= Seq(Resolver.mavenLocal) // temporary
+  parallelExecution := false
 )
 
 lazy val publishSettings = Seq(
@@ -38,8 +37,7 @@ lazy val scalaTest = (project in file("scalatest"))
   .settings(
     name := "scalatest-embedinflux",
     scalaVersion := "2.12.4",
-    libraryDependencies ++= Dependencies.scalaTestDep,
-    parallelExecution := false
+    libraryDependencies ++= Dependencies.scalaTestDep
   )
 
 lazy val specs2 = (project in file("specs2"))
