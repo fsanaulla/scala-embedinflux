@@ -49,5 +49,8 @@ trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite =>
     super.afterAll()
   }
 
+  /***
+    * Clean up all resources
+    */
   final def cleanUpResources(): Unit = influx.cleanup()
 }

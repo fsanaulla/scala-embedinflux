@@ -10,13 +10,27 @@ import org.specs2.specification.BeforeAfterAll
   * Date: 23.02.18
   */
 trait EmbeddedInfluxDB extends BeforeAfterAll {
-  val port = 8086
-  val backUpPort = 8088
+
+  /** define HTTP port */
+  def httpPort = 8086
+
+  /** define back up port */
+  def backUpPort = 8089
+
+  /** defile UDP port, by default turned off */
+  def udpPort: Option[Int] = None
+
+  private def conf: InfluxConfigurationWriter = udpPort match {
+    case Some(p) =>
+      new InfluxConfigurationWriter(backUpPort, httpPort, p)
+    case _ =>
+      new InfluxConfigurationWriter(backUpPort, httpPort)
+  }
 
   private val influx: InfluxServer =
     new InfluxServer
       .Builder()
-      .setInfluxConfiguration(new InfluxConfigurationWriter(backUpPort, port))
+      .setInfluxConfiguration(conf)
       .build()
 
   override def beforeAll: Unit = {
@@ -26,5 +40,8 @@ trait EmbeddedInfluxDB extends BeforeAfterAll {
 
   override def afterAll: Unit = influx.stop()
 
+  /***
+    * Clean up all resources
+    */
   final def cleanUpResources(): Unit = influx.cleanup()
 }

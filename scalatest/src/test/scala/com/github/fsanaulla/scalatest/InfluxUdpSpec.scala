@@ -21,7 +21,7 @@ class InfluxUdpSpec
   implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
 
   lazy val influxHttp: InfluxDB = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", udpPort)
+  lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", udpPort.get)
 
   "InfluxDB" should "correctly work" in {
     val tp = Point("cpu").addTag("1", "1").addField("2", 2)
@@ -36,5 +36,4 @@ class InfluxUdpSpec
       .futureValue
       .series should not equal Nil
   }
-
 }

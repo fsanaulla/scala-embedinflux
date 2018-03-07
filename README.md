@@ -15,7 +15,8 @@ libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % "0.1.
 libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % "0.1.2" % Test
 ```
 ## Usage
-Influx will start by default of HTTP port `8086`, with back up port `8088`. You can change this parameters by overriding `port` and `backUpPort` fields.
+Influx will start by default of HTTP port `8086`, with back up port `8088`. 
+You can change this parameters by overriding `httpPort` and `backUpPort` fields. By default UDP service is disabled, to enable it override `udpPort` field.
 For embed InfluxDB in your test suite, mix it with `EmbeddedInfluxDB`.
 
 For **Scalatest** it's look like:

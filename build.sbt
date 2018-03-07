@@ -12,7 +12,6 @@ lazy val commonSettings = Seq(
 )
 
 lazy val publishSettings = Seq(
-  // Publish section
   useGpg := true,
   publishArtifact in Test := false,
   scmInfo := Some(
