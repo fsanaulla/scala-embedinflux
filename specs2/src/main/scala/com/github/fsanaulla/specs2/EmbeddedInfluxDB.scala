@@ -15,7 +15,7 @@ trait EmbeddedInfluxDB extends BeforeAfterAll {
   def httpPort = 8086
 
   /** define back up port */
-  def backUpPort = 8089
+  def backUpPort = 8088
 
   /** defile UDP port, by default turned off */
   def udpPort: Option[Int] = None
