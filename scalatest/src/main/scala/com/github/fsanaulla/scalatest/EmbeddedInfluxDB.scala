@@ -27,8 +27,7 @@ trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite =>
       new InfluxConfigurationWriter(backUpPort, httpPort)
   }
 
-
-  private val influx: InfluxServer =
+  private lazy val influx: InfluxServer =
     new InfluxServer
       .Builder()
       .setInfluxConfiguration(conf)
