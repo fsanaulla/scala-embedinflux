@@ -1,7 +1,7 @@
 package com.github.fsanaulla.scalatest
 
+import com.github.fsanaulla.core.testing.InfluxConf
 import io.apisense.embed.influx.InfluxServer
-import io.apisense.embed.influx.configuration.InfluxConfigurationWriter
 import org.scalatest.{BeforeAndAfterAll, Suite}
 
 /**
@@ -9,28 +9,12 @@ import org.scalatest.{BeforeAndAfterAll, Suite}
   * Author: fayaz.sanaulla@gmail.com
   * Date: 23.02.18
   */
-trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite =>
+trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite with InfluxConf =>
 
-  /** define HTTP port */
-  def httpPort = 8086
-
-  /** define back up port */
-  def backUpPort = 8088
-
-  /** defile UDP port, by default turned off */
-  def udpPort: Option[Int] = None
-
-  private def conf: InfluxConfigurationWriter = udpPort match {
-    case Some(p) =>
-      new InfluxConfigurationWriter(backUpPort, httpPort, p)
-    case _ =>
-      new InfluxConfigurationWriter(backUpPort, httpPort)
-  }
-
-  private lazy val influx: InfluxServer =
+  private val influx: InfluxServer =
     new InfluxServer
       .Builder()
-      .setInfluxConfiguration(conf)
+      .setInfluxConfiguration(configuration)
       .build()
 
   override def beforeAll(): Unit = {

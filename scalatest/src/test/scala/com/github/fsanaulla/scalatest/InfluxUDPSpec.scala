@@ -1,5 +1,6 @@
 package com.github.fsanaulla.scalatest
 
+import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.paulgoldbaum.influxdbclient.{InfluxDB, Point, UdpClient}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Second, Seconds, Span}
@@ -12,18 +13,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Author: fayaz.sanaulla@gmail.com
   * Date: 27.02.18
   */
-class InfluxUdpSpec
+class InfluxUDPSpec
   extends FlatSpec
     with Matchers
     with EmbeddedInfluxDB
+    with InfluxUDPConf
     with ScalaFutures {
 
   implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  override def udpPort = Some(8089)
-
-  lazy val influxHttp: InfluxDB = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxDB = InfluxDB.connect("localhost", 8086)
+  lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", 8089)
 
   "InfluxDB" should "correctly work" in {
     val tp = Point("cpu").addTag("1", "1").addField("2", 2)

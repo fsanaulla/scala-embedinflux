@@ -11,8 +11,8 @@ object Dependencies {
   final val specs2 = "org.specs2" %% "specs2-core" % "4.0.3"
   final val influxClient = "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2" % Test
 
-  final val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.0.2"
+  final val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.1.0"
 
-  final val scalaTestDep = Seq(scalaTest, embeddedInflux, influxClient)
-  final val specs2Dep = Seq(specs2, embeddedInflux, influxClient)
+  final val scalaTestDep = Seq(scalaTest, influxClient)
+  final val specs2Dep = Seq(specs2, influxClient)
 }
