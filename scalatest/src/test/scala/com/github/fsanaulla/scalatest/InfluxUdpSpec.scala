@@ -1,6 +1,8 @@
 package com.github.fsanaulla.scalatest
 
-import com.paulgoldbaum.influxdbclient.{InfluxDB, Point, UdpClient}
+import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
+import com.github.fsanaulla.chronicler.udp.InfluxUdpClient
+import com.github.fsanaulla.core.model.Point
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Second, Seconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
@@ -22,20 +24,22 @@ class InfluxUdpSpec
 
   override def udpPort = Some(8089)
 
-  lazy val influxHttp: InfluxDB = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: UdpClient = InfluxDB.udpConnect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxAsyncHttpClient =
+    InfluxDB.connect("localhost", httpPort)
+  lazy val influxUdp: InfluxUdpClient =
+    com.github.fsanaulla.chronicler.udp.InfluxDB.connect("localhost", udpPort.get)
 
   "InfluxDB" should "correctly work" in {
     val tp = Point("cpu").addTag("1", "1").addField("2", 2)
 
-    influxUdp.write(tp) shouldEqual {}
+    influxUdp.writePoint(tp).futureValue shouldEqual {}
 
     Thread.sleep(3000)
 
     influxHttp
-      .selectDatabase("udp")
-      .query("SELECT * FROM cpu")
+      .database("udp")
+      .readJs("SELECT * FROM cpu")
       .futureValue
-      .series should not equal Nil
+      .queryResult should not equal Nil
   }
 }
