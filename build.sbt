@@ -49,3 +49,6 @@ lazy val specs2 = (project in file("specs2"))
     libraryDependencies ++= Dependencies.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
+
+addCommandAlias("fullTest", ";clean;compile;test:compile;test")
+addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")
