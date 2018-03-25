@@ -2,7 +2,9 @@ package com.github.fsanaulla.specs2
 
 import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
 import com.github.fsanaulla.chronicler.udp.InfluxUdpClient
-import com.github.fsanaulla.core.model.Point
+import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.macros.Macros
+import com.github.fsanaulla.macros.annotations.{field, tag}
 import org.specs2._
 import org.specs2.concurrent.ExecutionEnv
 
@@ -17,6 +19,10 @@ class InfluxUdpSpec(implicit ee: ExecutionEnv)
   extends mutable.Specification
     with EmbeddedInfluxDB {
 
+  case class Test(@tag name: String, @field age: Int)
+
+  implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
+
   override def udpPort = Some(8089)
 
   lazy val influxHttp: InfluxAsyncHttpClient =
@@ -26,10 +32,10 @@ class InfluxUdpSpec(implicit ee: ExecutionEnv)
 
   "InfluxDB" >> {
     "correctly work" in {
-      val tp = Point("cpu").addTag("1", "1").addField("2", 2)
+      val t = Test("f", 1)
 
       influxUdp
-        .writePoint(tp)
+        .write[Test]("cpu", t)
         .map(u => u mustEqual {})
         .await(retries = 2, timeout = 2.seconds)
 
@@ -37,8 +43,8 @@ class InfluxUdpSpec(implicit ee: ExecutionEnv)
 
       influxHttp
         .database("udp")
-        .readJs("SELECT * FROM cpu")
-        .map(_.queryResult must not equalTo Nil)
+        .read[Test]("SELECT * FROM cpu")
+        .map(_.queryResult mustEqual Seq(t))
         .await(retries = 2, timeout = 2.seconds)
     }
   }

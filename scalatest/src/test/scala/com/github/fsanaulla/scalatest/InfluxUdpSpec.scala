@@ -2,7 +2,9 @@ package com.github.fsanaulla.scalatest
 
 import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
 import com.github.fsanaulla.chronicler.udp.InfluxUdpClient
-import com.github.fsanaulla.core.model.Point
+import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.macros.Macros
+import com.github.fsanaulla.macros.annotations.{field, tag}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Second, Seconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
@@ -20,9 +22,14 @@ class InfluxUdpSpec
     with EmbeddedInfluxDB
     with ScalaFutures {
 
-  implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
+  implicit val pc: PatienceConfig =
+    PatienceConfig(Span(20, Seconds), Span(1, Second))
 
   override def udpPort = Some(8089)
+
+  case class Test(@tag name: String, @field age: Int)
+
+  implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
 
   lazy val influxHttp: InfluxAsyncHttpClient =
     InfluxDB.connect("localhost", httpPort)
@@ -30,16 +37,19 @@ class InfluxUdpSpec
     com.github.fsanaulla.chronicler.udp.InfluxDB.connect("localhost", udpPort.get)
 
   "InfluxDB" should "correctly work" in {
-    val tp = Point("cpu").addTag("1", "1").addField("2", 2)
 
-    influxUdp.writePoint(tp).futureValue shouldEqual {}
+    val t = Test("f", 1)
+
+    influxUdp
+      .write[Test]("cpu", t)
+      .futureValue shouldEqual {}
 
     Thread.sleep(3000)
 
     influxHttp
       .database("udp")
-      .readJs("SELECT * FROM cpu")
+      .read[Test]("SELECT * FROM cpu")
       .futureValue
-      .queryResult should not equal Nil
+      .queryResult shouldEqual Seq(t)
   }
 }
