@@ -7,8 +7,8 @@ Inspired by [scalatest-embedmongo](https://github.com/SimplyScala/scalatest-embe
 
 | Project | Version |
 | ------------- | ------------- |
-| `scalatest-embedinflux` | [![Latest version](https://index.scala-lang.org/fsanaulla/scala-embedinflux/scalatest-embedinflux/latest.svg)](https://index.scala-lang.org/fsanaulla/scala-embedinflux/scalatest-embedinflux) |
-| `specs2-embedinflux` | [![Latest version](https://index.scala-lang.org/fsanaulla/scala-embedinflux/specs2-embedinflux/latest.svg)](https://index.scala-lang.org/fsanaulla/scala-embedinflux/specs2-embedinflux) |
+| `scalatest-embedinflux` | ![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/scalatest-embedinflux_2.11.svg) |
+| `specs2-embedinflux` | ![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/specs2-embedinflux_2.11.svg) |
 
 ## Integration
 Add this dependencies to your `build.sbt`
