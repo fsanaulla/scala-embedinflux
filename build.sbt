@@ -50,5 +50,12 @@ lazy val specs2 = (project in file("specs2"))
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
 
-addCommandAlias("fullTest", ";clean;compile;test:compile;test")
+addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
 addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")
+
+// build all project in one task, for combining coverage reports and decreasing CI jobs
+addCommandAlias(
+  "travisTest",
+  ";project scalaTest;++ $TRAVIS_SCALA_VERSION fullTest;" +
+    "project specs2;++ $TRAVIS_SCALA_VERSION fullTest"
+)
