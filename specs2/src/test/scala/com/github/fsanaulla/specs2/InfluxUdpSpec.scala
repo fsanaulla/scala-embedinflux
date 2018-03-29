@@ -1,7 +1,7 @@
 package com.github.fsanaulla.specs2
 
 import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
-import com.github.fsanaulla.chronicler.udp.InfluxUdpClient
+import com.github.fsanaulla.chronicler.udp.{InfluxUDP, InfluxUDPClient}
 import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
 import com.github.fsanaulla.macros.Macros
 import com.github.fsanaulla.macros.annotations.{field, tag}
@@ -25,10 +25,8 @@ class InfluxUdpSpec(implicit ee: ExecutionEnv)
 
   override def udpPort = Some(8089)
 
-  lazy val influxHttp: InfluxAsyncHttpClient =
-    InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: InfluxUdpClient =
-    com.github.fsanaulla.chronicler.udp.InfluxDB.connect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxAsyncHttpClient = InfluxDB.connect("localhost", httpPort)
+  lazy val influxUdp: InfluxUDPClient = InfluxUDP.connect("localhost", udpPort.get)
 
   "InfluxDB" >> {
     "correctly work" in {

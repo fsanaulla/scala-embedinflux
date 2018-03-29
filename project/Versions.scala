@@ -4,5 +4,5 @@
   * Date: 25.03.18
   */
 object Versions {
-  final val chronicler = "0.2.0"
+  final val chronicler = "0.2.1"
 }
