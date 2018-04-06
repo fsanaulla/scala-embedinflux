@@ -3,6 +3,7 @@ package com.github.fsanaulla.scalatest
 import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
 import com.github.fsanaulla.chronicler.udp.{InfluxUDP, InfluxUDPClient}
 import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.github.fsanaulla.macros.Macros
 import com.github.fsanaulla.macros.annotations.{field, tag}
 import org.scalatest.concurrent.ScalaFutures
@@ -16,23 +17,24 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Author: fayaz.sanaulla@gmail.com
   * Date: 27.02.18
   */
-class InfluxUdpSpec
+class InfluxUDPSpec
   extends FlatSpec
     with Matchers
     with EmbeddedInfluxDB
+    with InfluxUDPConf
     with ScalaFutures {
 
   implicit val pc: PatienceConfig =
     PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  override def udpPort = Some(8089)
-
   case class Test(@tag name: String, @field age: Int)
 
   implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
 
-  lazy val influxHttp: InfluxAsyncHttpClient = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: InfluxUDPClient = InfluxUDP.connect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxAsyncHttpClient =
+    InfluxDB.connect()
+  lazy val influxUdp: InfluxUDPClient =
+    InfluxUDP.connect()
 
   "InfluxDB" should "correctly work" in {
 

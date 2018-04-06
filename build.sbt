@@ -29,7 +29,15 @@ lazy val publishSettings = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(scalaTest, specs2)
+  .aggregate(core, scalaTest, specs2)
+  .settings(publish := {})
+
+lazy val core = project
+  .settings(commonSettings: _*)
+  .settings(publishSettings: _*)
+  .settings(
+    name := "core-testing",
+    libraryDependencies += Dependencies.embeddedInflux)
 
 lazy val scalaTest = (project in file("scalatest"))
   .settings(commonSettings: _*)
@@ -38,6 +46,7 @@ lazy val scalaTest = (project in file("scalatest"))
     name := "scalatest-embedinflux",
     libraryDependencies ++= Dependencies.scalaTestDep
   )
+  .dependsOn(core % "compile->compile;test->test")
 
 lazy val specs2 = (project in file("specs2"))
   .settings(commonSettings: _*)
@@ -47,6 +56,7 @@ lazy val specs2 = (project in file("specs2"))
     libraryDependencies ++= Dependencies.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
+  .dependsOn(core % "compile->compile;test->test")
 
 addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
 addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")

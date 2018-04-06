@@ -22,13 +22,21 @@ libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % <vers
 libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % <version> % Test
 ```
 ## Usage
-Influx will start by default of HTTP port `8086`, with back up port `8088`. 
-You can change this parameters by overriding `httpPort` and `backUpPort` fields. By default UDP service is disabled, to enable it override `udpPort` field.
-For embed InfluxDB in your test suite, mix it with `EmbeddedInfluxDB`.
+Before you start your testing you need to choose, what type of configuration you need. For example if you need to work with [HTTP](https://docs.influxdata.com/influxdb/v1.5/guides/writing_data/) service.
+Mix your test suite with `InfluxHttpConf`. For using [UDP](https://github.com/influxdata/influxdb/blob/master/services/udp/README.md) feature mix suite with `InfluxUDPConf`.
+All port configuration can be changed. By overriding appropriate fields.
 
-For **Scalatest** it's look like:
+### HTTP
+For starting InfluxDB with HTTP service:
 ```
-class InfluxSpec extends FlatSpec with EmbeddedInfluxDB {
+// ScalaTest
+class InfluxSpec extends FlatSpec with InfluxHTTPConf with EmbeddedInfluxDB {
+
+  // by default `httpPort`: 8086
+  // def httpPort: Int = 8086
+
+  // auth is disabled(false)
+  // def auth: Boolean = false
 
   lazy val influx: InfluxDBClient = _
 
@@ -36,12 +44,65 @@ class InfluxSpec extends FlatSpec with EmbeddedInfluxDB {
 }
 ```
 
-For **Specs2** it's look the same:
 ```
-class InfluxSpec extends mutable.Specification with EmbeddedInfluxDB {
+// Specs2
+class InfluxSpec extends mutable.Specification with InfluxHTTPConf with EmbeddedInfluxDB {
+
+  // by default `httpPort`: 8086
+  // def httpPort: Int = 8086
+
+  // auth is disabled(false)
+  // def auth: Boolean = false
 
   lazy val influx: InfluxDBClient = _
-  
+
   ... // your tests
 }
 ```
+### UDP
+
+For UDP support in your tests:
+```
+// ScalaTest
+class InfluxSpec extends FlatSpec with InfluxUDPConf with EmbeddedInfluxDB {
+
+  // by default `httpPort`: 8086
+  // def httpPort: Int = 8086
+
+  // by default `udpPort`: 8089
+  // def udpPort: Int = 8089
+
+  // default database name `udp`
+  // def databse: Boolean = false
+
+  lazy val influx: InfluxDBClient = _
+
+  ... // your tests
+}
+```
+
+```
+// Specs2
+class InfluxSpec extends mutable.Specification with InfluxUDPConf with EmbeddedInfluxDB {
+
+  // by default `httpPort`: 8086
+  // def httpPort: Int = 8086
+
+  // by default `udpPort`: 8089
+  // def udpPort: Int = 8089
+
+  // default database name `udp`
+  // def databse: Boolean = false
+
+  lazy val influx: InfluxDBClient = _
+
+  ... // your tests
+}
+```
+### Custom
+You can define custom configuration by mixin with `InfluxConf` into your test suite and overriding `configuration` method.
+How to properly configure it look [here](https://github.com/APISENSE/embed-influxDB/blob/develop/src/main/java/io/apisense/embed/influx/configuration/InfluxConfigurationWriter.java).
+
+
+
+
