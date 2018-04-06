@@ -1,7 +1,6 @@
 package com.github.fsanaulla.scalatest
 
-import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
-import com.paulgoldbaum.influxdbclient._
+import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Second, Seconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
@@ -22,9 +21,10 @@ class InfluxHttpSpec
 
   implicit val pc: PatienceConfig = PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  lazy val influx: InfluxDB = InfluxDB.connect("localhost", 8086)
+  lazy val influx: InfluxAsyncHttpClient =
+    InfluxDB.connect()
 
   "InfluxDB" should "correctly work" in {
-    influx.ping().futureValue.series shouldEqual Nil
+    influx.ping().futureValue.isSuccess shouldEqual true
   }
 }

@@ -1,18 +1,25 @@
 # Scala Embedded InfluxDB
-[![CircleCI](https://circleci.com/gh/fsanaulla/scala-embedinflux/tree/master.svg?style=svg)](https://circleci.com/gh/fsanaulla/scala-embedinflux/tree/master)
-
+[![Build Status](https://travis-ci.org/fsanaulla/scala-embedinflux.svg?branch=master)](https://travis-ci.org/fsanaulla/scala-embedinflux)
+[![Codecov](https://img.shields.io/codecov/c/github/fsanaulla/scala-embedinflux.svg)](https://codecov.io/gh/fsanaulla/scala-embedinflux)
+[![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
+# About project
 Extensions for [ScalaTest](http://www.scalatest.org/) and [Specs2](https://etorreborre.github.io/specs2/), for simply embedding [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) in your test.
 Built on top of [embed-influxDB](https://github.com/APISENSE/embed-influxDB). 
 Inspired by [scalatest-embedmongo](https://github.com/SimplyScala/scalatest-embedmongo).
+
+| Project | Version |
+| ------------- | ------------- |
+| `scalatest-embedinflux` | ![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/scalatest-embedinflux_2.11.svg) |
+| `specs2-embedinflux` | ![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/specs2-embedinflux_2.11.svg) |
 
 ## Integration
 Add this dependencies to your `build.sbt`
 ```
 // Scalatest
-libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % "0.1.4" % Test
+libraryDependencies += "com.github.fsanaulla" %% "scalatest-embedinflux" % <version> % Test
 
 // Specs2
-libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % "0.1.4" % Test
+libraryDependencies += "com.github.fsanaulla" %% "specs2-embedinflux" % <version> % Test
 ```
 ## Usage
 Before you start your testing you need to choose, what type of configuration you need. For example if you need to work with [HTTP](https://docs.influxdata.com/influxdb/v1.5/guides/writing_data/) service.
@@ -27,9 +34,9 @@ class InfluxSpec extends FlatSpec with InfluxHTTPConf with EmbeddedInfluxDB {
 
   // by default `httpPort`: 8086
   // def httpPort: Int = 8086
-  
-  // auth is disabled(false) 
-  // def auth: Boolean = false 
+
+  // auth is disabled(false)
+  // def auth: Boolean = false
 
   lazy val influx: InfluxDBClient = _
 
@@ -43,12 +50,12 @@ class InfluxSpec extends mutable.Specification with EmbeddedInfluxDB {
 
   // by default `httpPort`: 8086
   // def httpPort: Int = 8086
-  
-  // auth is disabled(false) 
+
+  // auth is disabled(false)
   // def auth: Boolean = false
-  
+
   lazy val influx: InfluxDBClient = _
-  
+
   ... // your tests
 }
 ```
@@ -61,12 +68,12 @@ class InfluxSpec extends FlatSpec with InfluxUDPConf with EmbeddedInfluxDB {
 
   // by default `httpPort`: 8086
   // def httpPort: Int = 8086
-  
+
   // by default `udpPort`: 8089
   // def udpPort: Int = 8089
-  
+
   // default database name `udp`
-  // def databse: Boolean = false 
+  // def databse: Boolean = false
 
   lazy val influx: InfluxDBClient = _
 
@@ -80,15 +87,15 @@ class InfluxSpec extends mutable.Specification with InfluxUDPConf with EmbeddedI
 
   // by default `httpPort`: 8086
   // def httpPort: Int = 8086
-   
+
   // by default `udpPort`: 8089
   // def udpPort: Int = 8089
-    
+
   // default database name `udp`
   // def databse: Boolean = false
-  
+
   lazy val influx: InfluxDBClient = _
-  
+
   ... // your tests
 }
 ```

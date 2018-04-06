@@ -1,7 +1,7 @@
 import sbt.Keys.scalaVersion
 
 lazy val commonSettings = Seq(
-  version := "0.1.4",
+  scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.8", scalaVersion.value),
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
@@ -45,7 +45,6 @@ lazy val scalaTest = (project in file("scalatest"))
   .settings(publishSettings: _*)
   .settings(
     name := "scalatest-embedinflux",
-    scalaVersion := "2.12.4",
     libraryDependencies ++= Dependencies.scalaTestDep
   ).dependsOn(core)
 
@@ -54,9 +53,16 @@ lazy val specs2 = (project in file("specs2"))
   .settings(publishSettings: _*)
   .settings(
     name := "specs2-embedinflux",
-    scalaVersion := "2.12.4",
     libraryDependencies ++= Dependencies.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   ).dependsOn(core)
 
-addCommandAlias("publishToCentral", "clean;compile;publishSigned;sonatypeRelease")
+addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
+addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")
+
+// build all project in one task, for combining coverage reports and decreasing CI jobs
+addCommandAlias(
+  "travisTest",
+  ";project scalaTest;++ $TRAVIS_SCALA_VERSION fullTest;" +
+    "project specs2;++ $TRAVIS_SCALA_VERSION fullTest"
+)
