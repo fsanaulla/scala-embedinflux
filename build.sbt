@@ -6,7 +6,7 @@ lazy val commonSettings = Seq(
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
   licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
-  developers += Developer(id = "fsaznaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
+  developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
   parallelExecution := false
 )
 

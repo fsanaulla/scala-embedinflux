@@ -3,6 +3,7 @@ package com.github.fsanaulla.scalatest
 import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
 import com.github.fsanaulla.chronicler.udp.{InfluxUDP, InfluxUDPClient}
 import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.github.fsanaulla.macros.Macros
 import com.github.fsanaulla.macros.annotations.{field, tag}
 import org.scalatest.concurrent.ScalaFutures
