@@ -46,7 +46,7 @@ class InfluxSpec extends FlatSpec with InfluxHTTPConf with EmbeddedInfluxDB {
 
 ```
 // Specs2
-class InfluxSpec extends mutable.Specification with EmbeddedInfluxDB {
+class InfluxSpec extends mutable.Specification with InfluxHTTPConf with EmbeddedInfluxDB {
 
   // by default `httpPort`: 8086
   // def httpPort: Int = 8086
