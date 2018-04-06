@@ -6,7 +6,7 @@ lazy val commonSettings = Seq(
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
   licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
-  developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
+  developers += Developer(id = "fsaznaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
   parallelExecution := false
 )
 
@@ -37,7 +37,6 @@ lazy val core = project
   .settings(publishSettings: _*)
   .settings(
     name := "core-testing",
-    scalaVersion := "2.12.4",
     libraryDependencies += Dependencies.embeddedInflux)
 
 lazy val scalaTest = (project in file("scalatest"))
@@ -46,7 +45,8 @@ lazy val scalaTest = (project in file("scalatest"))
   .settings(
     name := "scalatest-embedinflux",
     libraryDependencies ++= Dependencies.scalaTestDep
-  ).dependsOn(core)
+  )
+  .dependsOn(core % "compile->compile;test->test")
 
 lazy val specs2 = (project in file("specs2"))
   .settings(commonSettings: _*)
@@ -55,7 +55,8 @@ lazy val specs2 = (project in file("specs2"))
     name := "specs2-embedinflux",
     libraryDependencies ++= Dependencies.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
-  ).dependsOn(core)
+  )
+  .dependsOn(core % "compile->compile;test->test")
 
 addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
 addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")

@@ -24,10 +24,10 @@ class InfluxUDPSpec(implicit ee: ExecutionEnv)
 
   implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
 
-  override def udpPort = Some(8089)
-
-  lazy val influxHttp: InfluxAsyncHttpClient = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: InfluxUDPClient = InfluxUDP.connect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxAsyncHttpClient =
+    InfluxDB.connect()
+  lazy val influxUdp: InfluxUDPClient =
+    InfluxUDP.connect()
 
   "InfluxDB" >> {
     "correctly work" in {

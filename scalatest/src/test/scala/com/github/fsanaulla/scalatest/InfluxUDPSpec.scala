@@ -26,14 +26,14 @@ class InfluxUDPSpec
   implicit val pc: PatienceConfig =
     PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  override def udpPort = Some(8089)
-
   case class Test(@tag name: String, @field age: Int)
 
   implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
 
-  lazy val influxHttp: InfluxAsyncHttpClient = InfluxDB.connect("localhost", httpPort)
-  lazy val influxUdp: InfluxUDPClient = InfluxUDP.connect("localhost", udpPort.get)
+  lazy val influxHttp: InfluxAsyncHttpClient =
+    InfluxDB.connect()
+  lazy val influxUdp: InfluxUDPClient =
+    InfluxUDP.connect()
 
   "InfluxDB" should "correctly work" in {
 

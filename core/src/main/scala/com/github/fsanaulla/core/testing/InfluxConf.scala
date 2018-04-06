@@ -1,7 +1,5 @@
 package com.github.fsanaulla.core.testing
 
-import io.apisense.embed.influx.configuration.InfluxConfigurationWriter
-
 /**
   * Created by
   * Author: fayaz.sanaulla@gmail.com
@@ -11,7 +9,6 @@ trait InfluxConf {
 
   /**
     * Configuration for running InfluxDB
-    * @return
     */
   def configuration: InfluxConfigurationWriter
 }
