@@ -29,8 +29,8 @@ lazy val publishSettings = Seq(
 )
 
 lazy val root = (project in file("."))
+  .settings(publishArtifact := false)
   .aggregate(core, scalaTest, specs2)
-  .settings(publish := {})
 
 lazy val core = project
   .settings(commonSettings: _*)

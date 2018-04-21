@@ -7,8 +7,8 @@ import sbt._
   */
 object Dependencies {
 
-  final val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-  final val specs2 = "org.specs2" %% "specs2-core" % "4.0.3"
+  final val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5" % Provided
+  final val specs2 = "org.specs2" %% "specs2-core" % "4.0.3" % Provided
   final val chroniclerAsync = "com.github.fsanaulla" %% "chronicler-async-http" % Versions.chronicler % Test
   final val chroniclerUdp = "com.github.fsanaulla" %% "chronicler-udp" % Versions.chronicler % Test
   final val chroniclerMacros = "com.github.fsanaulla" %% "chronicler-macros" % Versions.chronicler % Test

@@ -2,10 +2,8 @@ package com.github.fsanaulla.core.testing
 
 import io.apisense.embed.influx.configuration.InfluxConfigurationWriter
 
-/**
-  * Created by
-  * Author: fayaz.sanaulla@gmail.com
-  * Date: 10.03.18
+/***
+  * Provide necessary behavior for configure Embedded InfluxDB
   */
 trait InfluxConf {
 
