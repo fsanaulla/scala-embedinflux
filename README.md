@@ -1,7 +1,7 @@
 # Scala Embedded InfluxDB
 [![Build Status](https://travis-ci.org/fsanaulla/scala-embedinflux.svg?branch=master)](https://travis-ci.org/fsanaulla/scala-embedinflux)
 [![Codecov](https://img.shields.io/codecov/c/github/fsanaulla/scala-embedinflux.svg)](https://codecov.io/gh/fsanaulla/scala-embedinflux)
-![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/scalatest-embedinflux_2.11.svg)
+![Download](https://img.shields.io/maven-central/v/com.github.fsanaulla/core-testing_2.11.svg)
 [![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 # About project
 Open-source library for [ScalaTest](http://www.scalatest.org/) and [Specs2](https://etorreborre.github.io/specs2/), for simply embedding [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) in your test.

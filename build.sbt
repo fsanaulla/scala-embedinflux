@@ -1,7 +1,7 @@
 import sbt.Keys.scalaVersion
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4",
+  scalaVersion := "2.12.5",
   crossScalaVersions := Seq("2.11.8", scalaVersion.value),
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
