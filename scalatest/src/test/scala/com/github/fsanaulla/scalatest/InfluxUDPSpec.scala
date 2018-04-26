@@ -50,6 +50,6 @@ class InfluxUDPSpec
       .database("udp")
       .read[Test]("SELECT * FROM cpu")
       .futureValue
-      .queryResult shouldEqual Seq(t)
+      .queryResult shouldEqual Array(t)
   }
 }

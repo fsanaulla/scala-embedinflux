@@ -44,7 +44,7 @@ class InfluxUDPSpec(implicit ee: ExecutionEnv)
       influxHttp
         .database("udp")
         .read[Test]("SELECT * FROM cpu")
-        .map(_.queryResult mustEqual Seq(t))
+        .map(_.queryResult mustEqual Array(t))
         .await(retries = 2, timeout = 2.seconds)
     }
   }
