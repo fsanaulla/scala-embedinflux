@@ -20,8 +20,9 @@ class InfluxUDPSpec(implicit ee: ExecutionEnv)
     with InfluxUDPConf
     with EmbeddedInfluxDB {
 
-  case class Test(@tag name: String, @field age: Int)
+  args(skipAll = true)
 
+  case class Test(@tag name: String, @field age: Int)
 
   lazy val influxHttp: AhcIOClient =
     InfluxIO("localhost", 8086)

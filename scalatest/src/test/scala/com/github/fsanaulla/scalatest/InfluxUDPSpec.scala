@@ -7,7 +7,7 @@ import com.github.fsanaulla.chronicler.udp.InfluxUdp
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}
 import org.scalatest.time.{Second, Seconds, Span}
-import org.scalatest.{FlatSpec, Matchers, TryValues}
+import org.scalatest.{FlatSpec, Ignore, Matchers, TryValues}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -16,6 +16,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Author: fayaz.sanaulla@gmail.com
   * Date: 27.02.18
   */
+@Ignore
 class InfluxUDPSpec
   extends FlatSpec
     with Matchers
