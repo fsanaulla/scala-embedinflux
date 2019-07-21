@@ -1,7 +1,7 @@
 import sbt.Keys.scalaVersion
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.5",
+  scalaVersion := "2.12.8",
   crossScalaVersions := Seq("2.11.8", scalaVersion.value),
   organization := "com.github.fsanaulla",
   homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
@@ -37,14 +37,14 @@ lazy val core = project
   .settings(publishSettings: _*)
   .settings(
     name := "core-testing",
-    libraryDependencies += Dependencies.embeddedInflux)
+    libraryDependencies += Library.embeddedInflux)
 
 lazy val scalaTest = (project in file("scalatest"))
   .settings(commonSettings: _*)
   .settings(publishSettings: _*)
   .settings(
     name := "scalatest-embedinflux",
-    libraryDependencies ++= Dependencies.scalaTestDep
+    libraryDependencies ++= Library.scalaTestDep
   )
   .dependsOn(core % "compile->compile;test->test")
 
@@ -53,7 +53,7 @@ lazy val specs2 = (project in file("specs2"))
   .settings(publishSettings: _*)
   .settings(
     name := "specs2-embedinflux",
-    libraryDependencies ++= Dependencies.specs2Dep,
+    libraryDependencies ++= Library.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
   .dependsOn(core % "compile->compile;test->test")

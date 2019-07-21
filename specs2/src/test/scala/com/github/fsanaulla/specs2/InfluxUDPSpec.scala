@@ -1,11 +1,10 @@
 package com.github.fsanaulla.specs2
 
-import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
-import com.github.fsanaulla.chronicler.udp.{InfluxUDP, InfluxUDPClient}
-import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.chronicler.ahc.io.{AhcIOClient, InfluxIO}
+import com.github.fsanaulla.chronicler.macros.annotations.{field, tag}
+import com.github.fsanaulla.chronicler.macros.auto._
+import com.github.fsanaulla.chronicler.udp.{InfluxUDPClient, InfluxUdp}
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
-import com.github.fsanaulla.macros.Macros
-import com.github.fsanaulla.macros.annotations.{field, tag}
 import org.specs2._
 import org.specs2.concurrent.ExecutionEnv
 
@@ -23,12 +22,11 @@ class InfluxUDPSpec(implicit ee: ExecutionEnv)
 
   case class Test(@tag name: String, @field age: Int)
 
-  implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
 
-  lazy val influxHttp: InfluxAsyncHttpClient =
-    InfluxDB.connect()
+  lazy val influxHttp: AhcIOClient =
+    InfluxIO("localhost", 8086)
   lazy val influxUdp: InfluxUDPClient =
-    InfluxUDP.connect()
+    InfluxUdp("localhost", 8089)
 
   "InfluxDB" >> {
     "correctly work" in {
@@ -36,15 +34,12 @@ class InfluxUDPSpec(implicit ee: ExecutionEnv)
 
       influxUdp
         .write[Test]("cpu", t)
-        .map(u => u mustEqual {})
-        .await(retries = 2, timeout = 2.seconds)
-
-      Thread.sleep(3000)
+        .get mustEqual {}
 
       influxHttp
-        .database("udp")
-        .read[Test]("SELECT * FROM cpu")
-        .map(_.queryResult mustEqual Array(t))
+        .measurement[Test]("udp", "cpu")
+        .read("SELECT * FROM cpu")
+        .map(_.right.get mustEqual Array(t))
         .await(retries = 2, timeout = 2.seconds)
     }
   }

@@ -1,14 +1,13 @@
 package com.github.fsanaulla.scalatest
 
-import com.github.fsanaulla.chronicler.async.{InfluxAsyncHttpClient, InfluxDB}
-import com.github.fsanaulla.chronicler.udp.{InfluxUDP, InfluxUDPClient}
-import com.github.fsanaulla.core.model.{InfluxFormatter, Point}
+import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
+import com.github.fsanaulla.chronicler.macros.annotations.{field, tag}
+import com.github.fsanaulla.chronicler.macros.auto._
+import com.github.fsanaulla.chronicler.udp.InfluxUdp
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
-import com.github.fsanaulla.macros.Macros
-import com.github.fsanaulla.macros.annotations.{field, tag}
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}
 import org.scalatest.time.{Second, Seconds, Span}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, TryValues}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -22,19 +21,18 @@ class InfluxUDPSpec
     with Matchers
     with EmbeddedInfluxDB
     with InfluxUDPConf
-    with ScalaFutures {
+    with TryValues
+    with ScalaFutures
+    with Eventually
+    with IntegrationPatience {
 
   implicit val pc: PatienceConfig =
     PatienceConfig(Span(20, Seconds), Span(1, Second))
 
-  case class Test(@tag name: String, @field age: Int)
+  final case class Test(@tag name: String, @field age: Int)
 
-  implicit val fmt: InfluxFormatter[Test] = Macros.format[Test]
-
-  lazy val influxHttp: InfluxAsyncHttpClient =
-    InfluxDB.connect()
-  lazy val influxUdp: InfluxUDPClient =
-    InfluxUDP.connect()
+  lazy val influxHttp = InfluxIO("localhost", 8086)
+  lazy val influxUdp = InfluxUdp("localhost", 8089)
 
   "InfluxDB" should "correctly work" in {
 
@@ -42,14 +40,16 @@ class InfluxUDPSpec
 
     influxUdp
       .write[Test]("cpu", t)
-      .futureValue shouldEqual {}
+      .success
+      .value shouldEqual {}
 
-    Thread.sleep(3000)
-
-    influxHttp
-      .database("udp")
-      .read[Test]("SELECT * FROM cpu")
-      .futureValue
-      .queryResult shouldEqual Array(t)
+    eventually {
+      influxHttp
+        .measurement[Test]("udp", "cpu")
+        .read("SELECT * FROM cpu")
+        .futureValue
+        .right
+        .get shouldEqual Array(t)
+    }
   }
 }

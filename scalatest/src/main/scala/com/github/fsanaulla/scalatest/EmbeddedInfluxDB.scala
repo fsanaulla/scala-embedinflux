@@ -2,6 +2,7 @@ package com.github.fsanaulla.scalatest
 
 import com.github.fsanaulla.core.testing.InfluxConf
 import io.apisense.embed.influx.InfluxServer
+import io.apisense.embed.influx.configuration.VersionConfiguration
 import org.scalatest.{BeforeAndAfterAll, Suite}
 
 /**
@@ -14,6 +15,7 @@ trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite with InfluxConf =
   private val influx: InfluxServer =
     new InfluxServer
       .Builder()
+      .setVersionConfig(VersionConfiguration.fromRuntime(version))
       .setInfluxConfiguration(configuration)
       .build()
 

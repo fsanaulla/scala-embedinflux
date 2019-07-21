@@ -2,6 +2,7 @@ package com.github.fsanaulla.specs2
 
 import com.github.fsanaulla.core.testing.InfluxConf
 import io.apisense.embed.influx.InfluxServer
+import io.apisense.embed.influx.configuration.VersionConfiguration
 import org.specs2.mutable.SpecificationLike
 import org.specs2.specification.BeforeAfterAll
 
@@ -15,6 +16,7 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
   private val influx: InfluxServer =
     new InfluxServer
       .Builder()
+      .setVersionConfig(VersionConfiguration.fromRuntime(version))
       .setInfluxConfiguration(configuration)
       .build()
 
