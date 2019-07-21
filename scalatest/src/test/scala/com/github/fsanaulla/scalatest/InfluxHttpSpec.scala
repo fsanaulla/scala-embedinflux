@@ -2,6 +2,7 @@ package com.github.fsanaulla.scalatest
 
 import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
+import com.github.fsanaulla.scalatest.embedinflux.EmbeddedInfluxDB
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{FlatSpec, Matchers}
 

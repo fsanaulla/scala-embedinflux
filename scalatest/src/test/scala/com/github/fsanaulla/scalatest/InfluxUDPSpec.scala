@@ -5,9 +5,10 @@ import com.github.fsanaulla.chronicler.macros.annotations.{field, tag}
 import com.github.fsanaulla.chronicler.macros.auto._
 import com.github.fsanaulla.chronicler.udp.InfluxUdp
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
+import com.github.fsanaulla.scalatest.embedinflux.EmbeddedInfluxDB
 import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}
 import org.scalatest.time.{Second, Seconds, Span}
-import org.scalatest.{FlatSpec, Ignore, Matchers, TryValues}
+import org.scalatest.{FlatSpec, Matchers, TryValues}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -16,7 +17,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Author: fayaz.sanaulla@gmail.com
   * Date: 27.02.18
   */
-@Ignore
 class InfluxUDPSpec
   extends FlatSpec
     with Matchers
@@ -27,8 +27,11 @@ class InfluxUDPSpec
     with Eventually
     with IntegrationPatience {
 
-  implicit val pc: PatienceConfig =
-    PatienceConfig(Span(20, Seconds), Span(1, Second))
+  implicit override val patienceConfig: PatienceConfig =
+    PatienceConfig(
+      timeout = scaled(Span(60, Seconds)),
+      interval = scaled(Span(1, Second))
+    )
 
   final case class Test(@tag name: String, @field age: Int)
 

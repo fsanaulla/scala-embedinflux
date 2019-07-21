@@ -1,4 +1,4 @@
-package com.github.fsanaulla.specs2
+package com.github.fsanaulla.specs2.embedinflux
 
 import com.github.fsanaulla.core.testing.InfluxConf
 import io.apisense.embed.influx.InfluxServer

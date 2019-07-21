@@ -5,6 +5,7 @@ import com.github.fsanaulla.chronicler.macros.annotations.{field, tag}
 import com.github.fsanaulla.chronicler.macros.auto._
 import com.github.fsanaulla.chronicler.udp.{InfluxUDPClient, InfluxUdp}
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
+import com.github.fsanaulla.specs2.embedinflux.EmbeddedInfluxDB
 import org.specs2._
 import org.specs2.concurrent.ExecutionEnv
 

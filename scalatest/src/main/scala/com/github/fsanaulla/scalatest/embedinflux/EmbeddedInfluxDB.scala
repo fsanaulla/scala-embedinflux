@@ -1,4 +1,4 @@
-package com.github.fsanaulla.scalatest
+package com.github.fsanaulla.scalatest.embedinflux
 
 import com.github.fsanaulla.core.testing.InfluxConf
 import io.apisense.embed.influx.InfluxServer

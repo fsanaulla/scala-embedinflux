@@ -2,6 +2,7 @@ package com.github.fsanaulla.specs2
 
 import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
+import com.github.fsanaulla.specs2.embedinflux.EmbeddedInfluxDB
 import org.specs2._
 import org.specs2.concurrent.ExecutionEnv
 
