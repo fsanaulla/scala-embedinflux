@@ -11,8 +11,8 @@ object Library {
     val chronicler = "0.5.4"
   }
 
-  val scalaTest = "org.scalatest" %% "scalatest"   % "3.0.5" % Provided
-  val specs2    = "org.specs2"    %% "specs2-core" % "4.0.3" % Provided
+  val scalaTest = "org.scalatest" %% "scalatest"   % "3.0.8" % Provided
+  val specs2    = "org.specs2"    %% "specs2-core" % "4.6.0" % Provided
 
   val testing = List(
     "com.github.fsanaulla" %% "chronicler-url-io" % Versions.chronicler,
@@ -20,7 +20,7 @@ object Library {
     "com.github.fsanaulla" %% "chronicler-macros" % Versions.chronicler
   )
 
-  val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.2.0"
+  val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.1.1"
 
   val scalaTestDep: List[ModuleID] = List(
     scalaTest,
