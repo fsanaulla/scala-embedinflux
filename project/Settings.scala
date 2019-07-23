@@ -1,10 +1,11 @@
-import com.typesafe.sbt.SbtPgp.autoImportImpl.useGpg
+import com.typesafe.sbt.SbtPgp.autoImportImpl.{pgpPassphrase, pgpPublicRing, pgpSecretRing, useGpg}
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headerLicense
 import de.heikoseeberger.sbtheader.License
 import sbt.Keys._
-import sbt.{Developer, Opts, ScmInfo, url}
+import sbt.librarymanagement.LibraryManagementSyntax
+import sbt.{Developer, Opts, ScmInfo, file, url}
 
-object Settings {
+object Settings extends LibraryManagementSyntax {
   private object Owner {
     val id           = "fsanaulla"
     val name         = "Faiaz Sanaulla"
@@ -23,12 +24,12 @@ object Settings {
     parallelExecution := false
   )
 
-  lazy val publish = List(
-    useGpg := true,
+  val publish = List(
+    useGpg := false,
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/fsanaulla/scala-embedinflux"),
-        "https://github.com/fsanaulla/scala-embedinflux.git"
+        "scm:git@github.com:fsanaulla/scala-embedinflux.git"
       )
     ),
     pomIncludeRepository := (_ => false),
@@ -37,7 +38,11 @@ object Settings {
         Opts.resolver.sonatypeSnapshots
       else
         Opts.resolver.sonatypeStaging
-    )
+    ),
+    publishArtifact in Test := false,
+    pgpPublicRing := file("pubring.asc"),
+    pgpSecretRing := file("secring.asc"),
+    pgpPassphrase := sys.env.get("PGP_PASSPHRASE").map(_.toCharArray)
   )
 
   lazy val header = headerLicense := Some(License.ALv2("2017-2019", Owner.name))

@@ -1,8 +1,9 @@
-// build all project in one task, for combining coverage reports and decreasing CI jobs
 addCommandAlias(
-  "travisTest",
-  ";project scalaTest;++ $TRAVIS_SCALA_VERSION fullTest;" +
-    "project specs2;++ $TRAVIS_SCALA_VERSION fullTest"
+  "scTest",
+  ";project scalaTest; clean; compile; test:compile; test"
 )
 
-addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
+addCommandAlias(
+  "sp2Test",
+  ";project specs2; clean; compile; test:compile; test"
+)
