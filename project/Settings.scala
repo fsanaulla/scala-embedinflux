@@ -21,7 +21,7 @@ object Settings extends LibraryManagementSyntax {
     homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
     licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
     developers += Developer(Owner.id, Owner.name, Owner.email, url = url(Owner.github)),
-    parallelExecution := false
+    parallelExecution in Test := false
   )
 
   val publish = List(
