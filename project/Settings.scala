@@ -5,13 +5,21 @@ import sbt.Keys._
 import sbt.{Developer, Opts, ScmInfo, url}
 
 object Settings {
+  private object Owner {
+    val id           = "fsanaulla"
+    val name         = "Faiaz Sanaulla"
+    val email        = "fayaz.sanaulla@gmail.com"
+    val github       = "https://github.com/fsanaulla"
+    val organisation = "com.github.fsanaulla"
+  }
+
   lazy val common = List(
     scalaVersion := "2.12.8",
     crossScalaVersions := Seq("2.11.8", scalaVersion.value),
-    organization := "com.github.fsanaulla",
+    organization := Owner.organisation,
     homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
     licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
-    developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
+    developers += Developer(Owner.id, Owner.name, Owner.email, url = url(Owner.github)),
     parallelExecution := false
   )
 
@@ -32,5 +40,5 @@ object Settings {
     )
   )
 
-  lazy val header = headerLicense := Some(License.ALv2("2017-2019", "Faiaz Sanaulla"))
+  lazy val header = headerLicense := Some(License.ALv2("2017-2019", Owner.name))
 }

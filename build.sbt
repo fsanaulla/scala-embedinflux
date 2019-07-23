@@ -1,4 +1,5 @@
 lazy val `embed-influx` = (project in file("."))
+  .settings(Settings.common: _*)
   .settings(publishArtifact := false)
   .aggregate(
     core,
