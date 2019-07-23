@@ -1,11 +1,11 @@
 lazy val `scala-embedinflux` = (project in file("."))
   .settings(Settings.common: _*)
   .settings(publishArtifact := false)
-  .aggregate(
-    core,
-    scalaTest,
-    specs2
-  )
+//  .aggregate(
+//    core,
+//    scalaTest,
+//    specs2
+//  )
 
 lazy val core = project.in(file("modules/core"))
   .settings(
