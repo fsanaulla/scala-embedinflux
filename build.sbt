@@ -1,69 +1,38 @@
-import sbt.Keys.scalaVersion
-
-lazy val commonSettings = Seq(
-  scalaVersion := "2.12.8",
-  crossScalaVersions := Seq("2.11.8", scalaVersion.value),
-  organization := "com.github.fsanaulla",
-  homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
-  licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
-  developers += Developer(id = "fsanaulla", name = "Faiaz Sanaulla", email = "fayaz.sanaulla@gmail.com", url = url("https://github.com/fsanaulla")),
-  parallelExecution := false
-)
-
-lazy val publishSettings = Seq(
-  useGpg := true,
-  publishArtifact in Test := false,
-  scmInfo := Some(
-    ScmInfo(
-      url("https://github.com/fsanaulla/scala-embedinflux"),
-      "https://github.com/fsanaulla/scala-embedinflux.git"
-    )
-  ),
-  pomIncludeRepository := (_ => false),
-  publishTo := Some(
-    if (isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  )
-)
-
-lazy val root = (project in file("."))
+lazy val `embed-influx` = (project in file("."))
   .settings(publishArtifact := false)
-  .aggregate(core, scalaTest, specs2)
+  .aggregate(
+    core,
+    scalaTest,
+    specs2
+  )
 
-lazy val core = project
-  .settings(commonSettings: _*)
-  .settings(publishSettings: _*)
+lazy val core = project.in(file("modules/core"))
   .settings(
     name := "core-testing",
     libraryDependencies += Library.embeddedInflux)
+  .configure(defaultSettings)
 
-lazy val scalaTest = (project in file("scalatest"))
-  .settings(commonSettings: _*)
-  .settings(publishSettings: _*)
+lazy val scalaTest = (project in file("modules/scalatest"))
   .settings(
     name := "scalatest-embedinflux",
     libraryDependencies ++= Library.scalaTestDep
   )
-  .dependsOn(core % "compile->compile;test->test")
+  .configure(defaultSettings)
+  .dependsOn(core)
 
-lazy val specs2 = (project in file("specs2"))
-  .settings(commonSettings: _*)
-  .settings(publishSettings: _*)
+lazy val specs2 = (project in file("modules/specs2"))
   .settings(
     name := "specs2-embedinflux",
     libraryDependencies ++= Library.specs2Dep,
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
-  .dependsOn(core % "compile->compile;test->test")
+  .configure(defaultSettings)
+  .dependsOn(core)
 
-addCommandAlias("fullTest", ";clean;compile;test:compile;coverage;test;coverageReport")
-addCommandAlias("fullRelease", ";clean;publishSigned;sonatypeRelease")
+def defaultSettings: Project => Project =
+  _.settings(Settings.common: _*)
+    .settings(Settings.publish: _*)
+    .settings(Settings.header)
+    .enablePlugins(AutomateHeaderPlugin)
 
-// build all project in one task, for combining coverage reports and decreasing CI jobs
-addCommandAlias(
-  "travisTest",
-  ";project scalaTest;++ $TRAVIS_SCALA_VERSION fullTest;" +
-    "project specs2;++ $TRAVIS_SCALA_VERSION fullTest"
-)
+
