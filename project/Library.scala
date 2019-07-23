@@ -20,7 +20,7 @@ object Library {
     "com.github.fsanaulla" %% "chronicler-macros" % Versions.chronicler
   )
 
-  val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.1.1"
+  val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.2.0"
 
   val scalaTestDep: List[ModuleID] = List(
     scalaTest,
