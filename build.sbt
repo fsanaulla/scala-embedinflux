@@ -1,4 +1,4 @@
-lazy val `embed-influx` = (project in file("."))
+lazy val `scala-embedinflux` = (project in file("."))
   .settings(Settings.common: _*)
   .settings(publishArtifact := false)
   .aggregate(

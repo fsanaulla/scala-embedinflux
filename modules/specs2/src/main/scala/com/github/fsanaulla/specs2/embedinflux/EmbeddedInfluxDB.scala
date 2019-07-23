@@ -41,7 +41,6 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
     influx.start()
 
     Thread.sleep(1000)
-    super.beforeAll()
   }
 
   override def afterAll: Unit = {
@@ -49,6 +48,5 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
     influx.cleanup()
 
     Thread.sleep(1000)
-    super.afterAll()
   }
 }
