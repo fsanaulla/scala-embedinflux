@@ -16,20 +16,17 @@
 
 package com.github.fsanaulla.specs2
 
-import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
+import com.github.fsanaulla.chronicler.urlhttp.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
 import com.github.fsanaulla.specs2.embedinflux.EmbeddedInfluxDB
 import org.specs2._
-import org.specs2.concurrent.ExecutionEnv
-
-import scala.concurrent.duration._
 
 /**
   * Created by
   * Author: fayaz.sanaulla@gmail.com
   * Date: 23.02.18
   */
-class InfluxHTTPSpec(implicit ee: ExecutionEnv)
+class InfluxHTTPSpec
   extends mutable.Specification
     with InfluxHTTPConf
     with EmbeddedInfluxDB {
@@ -42,7 +39,7 @@ class InfluxHTTPSpec(implicit ee: ExecutionEnv)
       influx
         .ping
         .map(_.right.get.version mustEqual "1.7.6")
-        .await(retries = 2, timeout = 2.seconds)
+        .get
     }
   }
 }

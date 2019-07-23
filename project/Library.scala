@@ -8,29 +8,27 @@ import sbt._
 object Library {
 
   object Versions {
-    final val chronicler = "0.5.4"
+    val chronicler = "0.5.4"
   }
 
-  final val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5" % Provided
-  final val specs2 = "org.specs2" %% "specs2-core" % "4.0.3" % Provided
-  final val chroniclerAsync = "com.github.fsanaulla" %% "chronicler-ahc-io" % Versions.chronicler % Test
-  final val chroniclerUdp = "com.github.fsanaulla" %% "chronicler-udp" % Versions.chronicler % Test
-  final val chroniclerMacros = "com.github.fsanaulla" %% "chronicler-macros" % Versions.chronicler % Test
+  val scalaTest = "org.scalatest" %% "scalatest"   % "3.0.5" % Provided
+  val specs2    = "org.specs2"    %% "specs2-core" % "4.0.3" % Provided
 
-  final val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.2.0"
+  val testing = List(
+    "com.github.fsanaulla" %% "chronicler-url-io" % Versions.chronicler,
+    "com.github.fsanaulla" %% "chronicler-udp"    % Versions.chronicler,
+    "com.github.fsanaulla" %% "chronicler-macros" % Versions.chronicler
+  )
 
-  final val scalaTestDep = Seq(
+  val embeddedInflux = "io.apisense.embed.influx" % "embed-influxDB" % "1.2.0"
+
+  val scalaTestDep: List[ModuleID] = List(
     scalaTest,
-    embeddedInflux,
-    chroniclerUdp,
-    chroniclerAsync,
-    chroniclerMacros
-  )
-  final val specs2Dep = Seq(
+    embeddedInflux
+  ) ++ testing
+
+  val specs2Dep: List[ModuleID] = List(
     specs2,
-    embeddedInflux,
-    chroniclerUdp,
-    chroniclerAsync,
-    chroniclerMacros
-  )
+    embeddedInflux
+  ) ++ testing
 }

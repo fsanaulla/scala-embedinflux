@@ -16,17 +16,15 @@
 
 package com.github.fsanaulla.scalatest
 
-import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
 import com.github.fsanaulla.chronicler.macros.annotations.{field, tag}
 import com.github.fsanaulla.chronicler.macros.auto._
 import com.github.fsanaulla.chronicler.udp.InfluxUdp
+import com.github.fsanaulla.chronicler.urlhttp.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.github.fsanaulla.scalatest.embedinflux.EmbeddedInfluxDB
-import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}
+import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.time.{Second, Seconds, Span}
 import org.scalatest.{FlatSpec, Ignore, Matchers, TryValues}
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by
@@ -40,7 +38,6 @@ class InfluxUDPSpec
     with EmbeddedInfluxDB
     with InfluxUDPConf
     with TryValues
-    with ScalaFutures
     with Eventually
     with IntegrationPatience {
 
@@ -68,7 +65,7 @@ class InfluxUDPSpec
       influxHttp
         .measurement[Test]("udp", "cpu")
         .read("SELECT * FROM cpu")
-        .futureValue
+        .get
         .right
         .get shouldEqual Array(t)
     }

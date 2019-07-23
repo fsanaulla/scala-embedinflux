@@ -16,13 +16,10 @@
 
 package com.github.fsanaulla.scalatest
 
-import com.github.fsanaulla.chronicler.ahc.io.InfluxIO
+import com.github.fsanaulla.chronicler.urlhttp.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
 import com.github.fsanaulla.scalatest.embedinflux.EmbeddedInfluxDB
-import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{FlatSpec, Matchers}
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by
@@ -33,14 +30,12 @@ class InfluxHttpSpec
   extends FlatSpec
     with Matchers
     with EmbeddedInfluxDB
-    with InfluxHTTPConf
-    with ScalaFutures
-    with IntegrationPatience {
+    with InfluxHTTPConf {
 
   lazy val influx =
     InfluxIO("localhost", 8086)
 
   "InfluxDB" should "correctly work" in {
-    influx.ping.futureValue.right.get.version shouldEqual "1.7.6"
+    influx.ping.get.right.get.version shouldEqual "1.7.6"
   }
 }
