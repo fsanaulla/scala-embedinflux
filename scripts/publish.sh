@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 modules=(
-    core scalaTest spec2
+    core scalaTest specs2
 )
 
 for md in "${modules[@]}"
