@@ -20,6 +20,7 @@ import com.github.fsanaulla.chronicler.urlhttp.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxHTTPConf
 import com.github.fsanaulla.specs2.embedinflux.EmbeddedInfluxDB
 import org.specs2._
+import org.specs2.matcher.EventuallyMatchers
 
 /**
   * Created by
@@ -29,17 +30,20 @@ import org.specs2._
 class InfluxHTTPSpec
   extends mutable.Specification
     with EmbeddedInfluxDB
-    with InfluxHTTPConf {
+    with InfluxHTTPConf
+    with EventuallyMatchers {
 
   lazy val influx =
     InfluxIO("localhost", 8086)
 
   "InfluxDB" >> {
     "ping database" in {
-      influx
-        .ping
-        .map(_.right.get.version mustEqual "1.7.6")
-        .get
+      eventually {
+        influx
+          .ping
+          .map(_.right.get.version mustEqual "1.7.6")
+          .get
+      }
     }
   }
 }
