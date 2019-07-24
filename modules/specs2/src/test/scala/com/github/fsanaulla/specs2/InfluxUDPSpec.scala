@@ -34,6 +34,8 @@ class InfluxUDPSpec
     with InfluxUDPConf
     with EmbeddedInfluxDB {
 
+  args(skipAll = true)
+
   case class Test(@tag name: String, @field age: Int)
 
   lazy val influxHttp =
