@@ -47,7 +47,7 @@ trait EmbeddedInfluxDB extends BeforeAndAfterAll { self: Suite with InfluxConf =
     influx.stop()
     influx.cleanup()
 
-    Thread.sleep(1000)
+    Thread.sleep(5000)
     super.afterAll()
   }
 }
