@@ -37,7 +37,7 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
       .build()
 
   override def beforeAll: Unit = {
-    influx.init()
+//    influx.init()
     influx.start()
 
     Thread.sleep(1000)
@@ -45,7 +45,7 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
 
   override def afterAll: Unit = {
     influx.stop()
-    influx.cleanup()
+//    influx.cleanup()
 
     Thread.sleep(1000)
   }

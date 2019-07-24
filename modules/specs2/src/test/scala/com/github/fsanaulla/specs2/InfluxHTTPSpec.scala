@@ -28,14 +28,14 @@ import org.specs2._
   */
 class InfluxHTTPSpec
   extends mutable.Specification
-    with InfluxHTTPConf
-    with EmbeddedInfluxDB {
+    with EmbeddedInfluxDB
+    with InfluxHTTPConf {
 
   lazy val influx =
     InfluxIO("localhost", 8086)
 
   "InfluxDB" >> {
-    "ping databse" in {
+    "ping database" in {
       influx
         .ping
         .map(_.right.get.version mustEqual "1.7.6")
