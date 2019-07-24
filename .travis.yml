@@ -32,7 +32,7 @@ jobs:
   - stage: deploy_2.13
     script: "./scripts/publish.sh $TRAVIS_SCALA_VERSION"
     name: Deploying scala 2.13.0 artifacts
-    scala: 2.12.8
+    scala: 2.13.0
   - stage: release
     script: chmod 777 scripts/release.sh && ./scripts/release.sh
     scala: 2.12.8
