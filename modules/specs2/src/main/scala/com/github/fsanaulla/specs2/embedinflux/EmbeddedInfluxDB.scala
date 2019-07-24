@@ -47,6 +47,6 @@ trait EmbeddedInfluxDB extends BeforeAfterAll { self: SpecificationLike with Inf
     influx.cleanup()
 
     // https://github.com/APISENSE/embed-influxDB/issues/19
-    Thread.sleep(10000)
+    Thread.sleep(1000)
   }
 }

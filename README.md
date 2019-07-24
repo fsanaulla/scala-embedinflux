@@ -1,4 +1,4 @@
-# Scala Embedded InfluxDB
+# scala-embedinflux
 [![Build Status](https://travis-ci.org/fsanaulla/scala-embedinflux.svg?branch=master)](https://travis-ci.org/fsanaulla/scala-embedinflux)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e9932125a5d2487f901e3170a70f4904)](https://www.codacy.com/app/fsanaulla/scala-embedinflux?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fsanaulla/scala-embedinflux&amp;utm_campaign=Badge_Grade)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fsanaulla/core-testing_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fsanaulla/core-testing_2.11)
