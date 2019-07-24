@@ -15,8 +15,8 @@ object Settings extends LibraryManagementSyntax {
   }
 
   lazy val common = List(
-    scalaVersion := "2.12.8",
-    crossScalaVersions := Seq("2.11.8", scalaVersion.value),
+    scalaVersion := "2.13.0",
+    crossScalaVersions := Seq("2.11.8", "2.12.8", scalaVersion.value),
     organization := Owner.organisation,
     homepage := Some(url("https://github.com/fsanaulla/scala-embedinflux")),
     licenses += "Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"),
