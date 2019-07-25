@@ -24,14 +24,13 @@ import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.github.fsanaulla.scalatest.embedinflux.EmbeddedInfluxDB
 import org.scalatest.concurrent.{Eventually, IntegrationPatience}
 import org.scalatest.time.{Second, Seconds, Span}
-import org.scalatest.{FlatSpec, Ignore, Matchers, TryValues}
+import org.scalatest.{FlatSpec, Matchers, TryValues}
 
 /**
   * Created by
   * Author: fayaz.sanaulla@gmail.com
   * Date: 27.02.18
   */
-@Ignore
 class InfluxUDPSpec
   extends FlatSpec
     with Matchers
@@ -55,6 +54,10 @@ class InfluxUDPSpec
   "InfluxDB" should "correctly work" in {
 
     val t = Test("f", 1)
+
+    eventually {
+      influxHttp.ping.get.right.get.version shouldEqual "1.7.6"
+    }
 
     influxUdp
       .write[Test]("cpu", t)

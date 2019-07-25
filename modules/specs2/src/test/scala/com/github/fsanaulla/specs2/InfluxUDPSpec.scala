@@ -23,6 +23,7 @@ import com.github.fsanaulla.chronicler.urlhttp.io.InfluxIO
 import com.github.fsanaulla.core.testing.configurations.InfluxUDPConf
 import com.github.fsanaulla.specs2.embedinflux.EmbeddedInfluxDB
 import org.specs2._
+import org.specs2.matcher.EventuallyMatchers
 
 /**
   * Created by
@@ -32,11 +33,10 @@ import org.specs2._
 class InfluxUDPSpec
   extends mutable.Specification
     with InfluxUDPConf
-    with EmbeddedInfluxDB {
+    with EmbeddedInfluxDB
+    with EventuallyMatchers {
 
-  args(skipAll = true)
-
-  case class Test(@tag name: String, @field age: Int)
+  final case class Test(@tag name: String, @field age: Int)
 
   lazy val influxHttp =
     InfluxIO("localhost", 8086)
@@ -47,15 +47,26 @@ class InfluxUDPSpec
     "correctly work" in {
       val t = Test("f", 1)
 
+      eventually {
+        influxHttp
+          .ping
+          .get
+          .right
+          .get
+          .version mustEqual "1.7.6"
+      }
+
       influxUdp
         .write[Test]("cpu", t)
         .get mustEqual {}
 
-      influxHttp
-        .measurement[Test]("udp", "cpu")
-        .read("SELECT * FROM cpu")
-        .map(_.right.get mustEqual Array(t))
-        .get
+      eventually {
+        influxHttp
+          .measurement[Test]("udp", "cpu")
+          .read("SELECT * FROM cpu")
+          .map(_.right.get mustEqual Array(t))
+          .get
+      }
     }
   }
 }
